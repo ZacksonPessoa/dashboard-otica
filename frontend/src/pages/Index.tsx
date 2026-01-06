@@ -1,12 +1,15 @@
-import { Plus, Upload } from "lucide-react";
 import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { ProjectAnalytics } from "@/components/dashboard/ProjectAnalytics";
 import { SalesReport } from "@/components/dashboard/SalesReport";
 import { Transactions } from "@/components/dashboard/Transactions";
+import { DateRangePicker } from "@/components/dashboard/DateRangePicker";
+import { DateRangeProvider, useDateRange } from "@/contexts/DateRangeContext";
 
-const Index = () => {
+function DashboardContent() {
+  const { dateRange, setDateRange } = useDateRange();
+
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
@@ -22,14 +25,7 @@ const Index = () => {
               <p className="text-muted-foreground">Planeje, priorize e realize suas tarefas com facilidade.</p>
             </div>
             <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 bg-primary hover:bg-accent text-primary-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
-                <Plus className="w-4 h-4" />
-                Adicionar Projeto
-              </button>
-              <button className="flex items-center gap-2 border border-border hover:border-primary text-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-secondary">
-                <Upload className="w-4 h-4" />
-                Importar Dados
-              </button>
+              <DateRangePicker dateRange={dateRange} onDateRangeChange={setDateRange} />
             </div>
           </div>
 
@@ -56,6 +52,14 @@ const Index = () => {
         </main>
       </div>
     </div>
+  );
+}
+
+const Index = () => {
+  return (
+    <DateRangeProvider>
+      <DashboardContent />
+    </DateRangeProvider>
   );
 };
 

@@ -96,9 +96,14 @@ export const api = {
     }
   },
 
-  async getStats(): Promise<Stats> {
+  async getStats(fromDate?: string, toDate?: string): Promise<Stats> {
     try {
-      const response = await fetch(`${API_BASE_URL}/ml/stats`);
+      const params = new URLSearchParams();
+      if (fromDate) params.append("from", fromDate);
+      if (toDate) params.append("to", toDate);
+      const queryString = params.toString();
+      const url = `${API_BASE_URL}/ml/stats${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(url);
       
       if (!response.ok) {
         const errorText = await response.text();
@@ -127,9 +132,14 @@ export const api = {
     }
   },
 
-  async getFinance(): Promise<{ data: FinanceData[]; maxValue: number }> {
+  async getFinance(fromDate?: string, toDate?: string): Promise<{ data: FinanceData[]; maxValue: number }> {
     try {
-      const response = await fetch(`${API_BASE_URL}/ml/finance`);
+      const params = new URLSearchParams();
+      if (fromDate) params.append("from", fromDate);
+      if (toDate) params.append("to", toDate);
+      const queryString = params.toString();
+      const url = `${API_BASE_URL}/ml/finance${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(url);
       
       if (!response.ok) {
         const errorText = await response.text();
@@ -188,9 +198,14 @@ export const api = {
     }
   },
 
-  async getTransactions(): Promise<Transaction[]> {
+  async getTransactions(fromDate?: string, toDate?: string): Promise<Transaction[]> {
     try {
-      const response = await fetch(`${API_BASE_URL}/ml/transactions`);
+      const params = new URLSearchParams();
+      if (fromDate) params.append("from", fromDate);
+      if (toDate) params.append("to", toDate);
+      const queryString = params.toString();
+      const url = `${API_BASE_URL}/ml/transactions${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(url);
       
       if (!response.ok) {
         const errorText = await response.text();
