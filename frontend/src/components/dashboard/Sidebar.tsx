@@ -1,27 +1,18 @@
 import { 
   LayoutDashboard, 
   CheckSquare, 
-  Calendar, 
   BarChart3, 
-  Users, 
-  Settings, 
-  HelpCircle, 
-  LogOut,
-  Download
+  LogOut
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: CheckSquare, label: "Tarefas", badge: "24" },
-  { icon: Calendar, label: "Calendário" },
+  { icon: LayoutDashboard, label: "Geral", active: true },
   { icon: BarChart3, label: "Análises" },
-  { icon: Users, label: "Equipe" },
+  { icon: CheckSquare, label: "Transações" },
 ];
 
 const generalItems = [
-  { icon: Settings, label: "Configurações" },
-  { icon: HelpCircle, label: "Ajuda" },
   { icon: LogOut, label: "Sair" },
 ];
 
@@ -77,10 +68,10 @@ export function Sidebar() {
             </li>
           ))}
         </ul>
+      </nav>
 
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-8 mb-4 px-3">
-          Geral
-        </p>
+      {/* Footer */}
+      <div className="p-4 border-t border-border">
         <ul className="space-y-1">
           {generalItems.map((item) => (
             <li key={item.label}>
@@ -91,31 +82,6 @@ export function Sidebar() {
             </li>
           ))}
         </ul>
-      </nav>
-
-      {/* Mobile App Card */}
-      <div className="p-4">
-        <div className="gradient-dark rounded-2xl p-4 text-primary-foreground relative overflow-hidden">
-          <div className="absolute inset-0 opacity-30">
-            <svg viewBox="0 0 200 200" className="w-full h-full">
-              <defs>
-                <pattern id="stripes" patternUnits="userSpaceOnUse" width="10" height="10" patternTransform="rotate(45)">
-                  <line x1="0" y1="0" x2="0" y2="10" stroke="currentColor" strokeWidth="2" opacity="0.3"/>
-                </pattern>
-              </defs>
-              <rect fill="url(#stripes)" width="200" height="200"/>
-            </svg>
-          </div>
-          <div className="relative z-10">
-            <p className="text-lg font-semibold mb-1">Baixe nosso</p>
-            <p className="text-2xl font-bold mb-2">Aplicativo Mobile</p>
-            <p className="text-xs opacity-80 mb-4">Tenha acesso de outra forma</p>
-            <button className="w-full bg-primary hover:bg-accent text-primary-foreground py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors">
-              <Download className="w-4 h-4" />
-              Baixar
-            </button>
-          </div>
-        </div>
       </div>
     </aside>
   );

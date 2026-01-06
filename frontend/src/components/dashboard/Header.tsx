@@ -1,4 +1,4 @@
-import { Search, Mail, Bell, Command } from "lucide-react";
+import { Search, Mail, Bell, Command, HelpCircle } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function Header() {
@@ -20,6 +20,9 @@ export function Header() {
 
       {/* Right Section */}
       <div className="flex items-center gap-4">
+        <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
+          <HelpCircle className="w-5 h-5 text-muted-foreground" />
+        </button>
         <button className="relative p-2 rounded-lg hover:bg-secondary transition-colors">
           <Mail className="w-5 h-5 text-muted-foreground" />
         </button>
