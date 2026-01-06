@@ -26,6 +26,13 @@ export interface UserMe {
   [key: string]: any;
 }
 
+export interface Stats {
+  totalSales: number;
+  todaySales: number;
+  pendingShipments: number;
+  cancelled: number;
+}
+
 export const api = {
   async getNotifications(): Promise<Notification[]> {
     const response = await fetch(`${API_BASE_URL}/ml/notifications`);
@@ -63,6 +70,37 @@ export const api = {
       return data.me;
     } catch (error) {
       console.error("Error in getMe:", error);
+      throw error;
+    }
+  },
+
+  async getStats(): Promise<Stats> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/ml/stats`);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Stats API Error Response:", errorText);
+        throw new Error(`Failed to fetch stats: ${response.status} ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      if (import.meta.env.DEV) {
+        console.log("📊 Stats Response:", data);
+      }
+      
+      if (!data.ok) {
+        throw new Error(data.error || "Failed to fetch stats");
+      }
+      
+      if (!data.stats) {
+        throw new Error("Stats data not found in response");
+      }
+      
+      return data.stats;
+    } catch (error) {
+      console.error("Error in getStats:", error);
       throw error;
     }
   },

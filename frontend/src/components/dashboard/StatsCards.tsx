@@ -1,38 +1,50 @@
 import { ArrowUpRight, TrendingUp } from "lucide-react";
 import { cn } from "@/lib/utils";
-
-const stats = [
-  {
-    title: "Total de Vendas",
-    value: "R$ 24.500",
-    subtitle: "Valor total",
-    trend: "up",
-    active: true,
-  },
-  {
-    title: "Vendas do Dia",
-    value: "45",
-    subtitle: "Quantidade",
-    trend: "up",
-    active: false,
-  },
-  {
-    title: "Total a Enviar",
-    value: "12",
-    subtitle: "Pendentes",
-    trend: "up",
-    active: false,
-  },
-  {
-    title: "Cancelados",
-    value: "2",
-    subtitle: "Este mês",
-    trend: "neutral",
-    active: false,
-  },
-];
+import { useStats } from "@/hooks/use-stats";
 
 export function StatsCards() {
+  const { data: statsData, isLoading } = useStats();
+
+  // Formatar valor monetário
+  const formatCurrency = (value: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
+  };
+
+  const stats = [
+    {
+      title: "Total de Vendas",
+      value: isLoading
+        ? "..."
+        : formatCurrency(statsData?.totalSales || 0),
+      subtitle: "Valor total",
+      trend: "up",
+      active: true,
+    },
+    {
+      title: "Vendas do Dia",
+      value: isLoading ? "..." : (statsData?.todaySales || 0).toString(),
+      subtitle: "Quantidade",
+      trend: "up",
+      active: false,
+    },
+    {
+      title: "Total a Enviar",
+      value: isLoading ? "..." : (statsData?.pendingShipments || 0).toString(),
+      subtitle: "Pendentes",
+      trend: "up",
+      active: false,
+    },
+    {
+      title: "Cancelados",
+      value: isLoading ? "..." : (statsData?.cancelled || 0).toString(),
+      subtitle: "Este mês",
+      trend: "neutral",
+      active: false,
+    },
+  ];
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
       {stats.map((stat, index) => (
