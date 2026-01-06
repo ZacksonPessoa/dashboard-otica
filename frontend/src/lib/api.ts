@@ -53,6 +53,10 @@ export interface Transaction {
   date: string;
   status: string;
   quantity: number;
+  price: number;
+  buyer: string;
+  cpf: string;
+  address: string;
 }
 
 export interface ProductAnalysis {
