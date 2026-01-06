@@ -17,21 +17,21 @@ const Index = () => {
       <div className="ml-64">
         <Header />
         
-        <main className="p-6">
+        <main className="p-6 pt-24">
           {/* Title Section */}
           <div className="flex items-start justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-1">Dashboard</h1>
-              <p className="text-muted-foreground">Plan, prioritize, and accomplish your tasks with ease.</p>
+              <p className="text-muted-foreground">Planeje, priorize e realize suas tarefas com facilidade.</p>
             </div>
             <div className="flex items-center gap-3">
               <button className="flex items-center gap-2 bg-primary hover:bg-accent text-primary-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-colors">
                 <Plus className="w-4 h-4" />
-                Add Project
+                Adicionar Projeto
               </button>
               <button className="flex items-center gap-2 border border-border hover:border-primary text-foreground px-4 py-2.5 rounded-lg text-sm font-medium transition-colors hover:bg-secondary">
                 <Upload className="w-4 h-4" />
-                Import Data
+                Importar Dados
               </button>
             </div>
           </div>

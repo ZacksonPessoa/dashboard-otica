@@ -13,7 +13,7 @@ export function ProjectAnalytics() {
 
   return (
     <div className="bg-card rounded-2xl p-6 border border-border animate-slide-up" style={{ animationDelay: "200ms" }}>
-      <h3 className="text-lg font-semibold text-foreground mb-6">Project Analytics</h3>
+      <h3 className="text-lg font-semibold text-foreground mb-6">Análise de Projetos</h3>
       
       <div className="flex items-end justify-between gap-3 h-40">
         {data.map((item, index) => (

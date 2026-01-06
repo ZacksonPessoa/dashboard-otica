@@ -3,30 +3,30 @@ import { cn } from "@/lib/utils";
 
 const stats = [
   {
-    title: "Total Projects",
+    title: "Total de Projetos",
     value: "24",
-    subtitle: "Increased from last month",
+    subtitle: "Aumentou desde o mês passado",
     trend: "up",
     active: true,
   },
   {
-    title: "Ended Projects",
+    title: "Projetos Finalizados",
     value: "10",
-    subtitle: "Increased from last month",
+    subtitle: "Aumentou desde o mês passado",
     trend: "up",
     active: false,
   },
   {
-    title: "Running Projects",
+    title: "Projetos em Andamento",
     value: "12",
-    subtitle: "Increased from last month",
+    subtitle: "Aumentou desde o mês passado",
     trend: "up",
     active: false,
   },
   {
-    title: "Pending Project",
+    title: "Projeto Pendente",
     value: "2",
-    subtitle: "On Discuss",
+    subtitle: "Em Discussão",
     trend: "neutral",
     active: false,
   },

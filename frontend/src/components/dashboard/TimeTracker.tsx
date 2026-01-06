@@ -44,7 +44,7 @@ export function TimeTracker() {
       </div>
       
       <div className="relative z-10">
-        <h3 className="text-lg font-semibold mb-4">Time Tracker</h3>
+        <h3 className="text-lg font-semibold mb-4">Rastreador de Tempo</h3>
         
         <div className="text-4xl font-bold tracking-wider mb-6 font-mono">
           {formatTime(time.hours)}:{formatTime(time.minutes)}:{formatTime(time.seconds)}

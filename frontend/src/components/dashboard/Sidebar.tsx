@@ -13,21 +13,21 @@ import { cn } from "@/lib/utils";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Dashboard", active: true },
-  { icon: CheckSquare, label: "Tasks", badge: "24" },
-  { icon: Calendar, label: "Calendar" },
-  { icon: BarChart3, label: "Analytics" },
-  { icon: Users, label: "Team" },
+  { icon: CheckSquare, label: "Tarefas", badge: "24" },
+  { icon: Calendar, label: "Calendário" },
+  { icon: BarChart3, label: "Análises" },
+  { icon: Users, label: "Equipe" },
 ];
 
 const generalItems = [
-  { icon: Settings, label: "Settings" },
-  { icon: HelpCircle, label: "Help" },
-  { icon: LogOut, label: "Logout" },
+  { icon: Settings, label: "Configurações" },
+  { icon: HelpCircle, label: "Ajuda" },
+  { icon: LogOut, label: "Sair" },
 ];
 
 export function Sidebar() {
   return (
-    <aside className="fixed left-0 top-0 z-40 h-screen w-64 bg-card border-r border-border flex flex-col">
+    <aside className="fixed left-0 top-0 z-50 h-screen w-64 bg-card border-r border-border flex flex-col">
       {/* Logo */}
       <div className="p-6 flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
@@ -42,7 +42,7 @@ export function Sidebar() {
             <path d="M9 12l2 2 4-4" />
           </svg>
         </div>
-        <span className="text-xl font-bold text-foreground">Donezo</span>
+        <span className="text-xl font-bold text-foreground">Oticas Conceição</span>
       </div>
 
       {/* Menu Section */}
@@ -79,7 +79,7 @@ export function Sidebar() {
         </ul>
 
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mt-8 mb-4 px-3">
-          General
+          Geral
         </p>
         <ul className="space-y-1">
           {generalItems.map((item) => (
@@ -107,12 +107,12 @@ export function Sidebar() {
             </svg>
           </div>
           <div className="relative z-10">
-            <p className="text-lg font-semibold mb-1">Download our</p>
-            <p className="text-2xl font-bold mb-2">Mobile App</p>
-            <p className="text-xs opacity-80 mb-4">Get easy in another way</p>
+            <p className="text-lg font-semibold mb-1">Baixe nosso</p>
+            <p className="text-2xl font-bold mb-2">Aplicativo Mobile</p>
+            <p className="text-xs opacity-80 mb-4">Tenha acesso de outra forma</p>
             <button className="w-full bg-primary hover:bg-accent text-primary-foreground py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors">
               <Download className="w-4 h-4" />
-              Download
+              Baixar
             </button>
           </div>
         </div>

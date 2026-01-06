@@ -5,7 +5,7 @@ export function ProjectProgress() {
 
   return (
     <div className="bg-card rounded-2xl p-6 border border-border animate-slide-up" style={{ animationDelay: "600ms" }}>
-      <h3 className="text-lg font-semibold text-foreground mb-4">Project Progress</h3>
+      <h3 className="text-lg font-semibold text-foreground mb-4">Progresso do Projeto</h3>
       
       <div className="flex flex-col items-center">
         {/* Donut Chart */}
@@ -34,7 +34,7 @@ export function ProjectProgress() {
           </svg>
           <div className="absolute inset-0 flex flex-col items-center justify-center">
             <span className="text-3xl font-bold text-foreground">{progress}%</span>
-            <span className="text-xs text-muted-foreground">Project Ended</span>
+            <span className="text-xs text-muted-foreground">Projeto Finalizado</span>
           </div>
         </div>
 
@@ -42,15 +42,15 @@ export function ProjectProgress() {
         <div className="flex items-center justify-center gap-6">
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-primary" />
-            <span className="text-xs text-muted-foreground">Completed</span>
+            <span className="text-xs text-muted-foreground">Concluído</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-chart-3" />
-            <span className="text-xs text-muted-foreground">In Progress</span>
+            <span className="text-xs text-muted-foreground">Em Progresso</span>
           </div>
           <div className="flex items-center gap-2">
             <span className="w-2.5 h-2.5 rounded-full bg-warning" />
-            <span className="text-xs text-muted-foreground">Pending</span>
+            <span className="text-xs text-muted-foreground">Pendente</span>
           </div>
         </div>
       </div>

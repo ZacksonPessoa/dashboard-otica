@@ -3,32 +3,32 @@ import { Plus, Zap, GitBranch, Layout, Gauge, Globe } from "lucide-react";
 const projects = [
   { 
     icon: Zap, 
-    title: "Develop API Endpoints", 
-    date: "Nov 26, 2024",
+    title: "Desenvolver Endpoints da API", 
+    date: "26 de Nov, 2024",
     color: "bg-primary"
   },
   { 
     icon: GitBranch, 
-    title: "Onboarding Flow", 
-    date: "Nov 28, 2024",
+    title: "Fluxo de Onboarding", 
+    date: "28 de Nov, 2024",
     color: "bg-chart-2"
   },
   { 
     icon: Layout, 
-    title: "Build Dashboard", 
-    date: "Nov 30, 2024",
+    title: "Construir Dashboard", 
+    date: "30 de Nov, 2024",
     color: "bg-chart-3"
   },
   { 
     icon: Gauge, 
-    title: "Optimize Page Load", 
-    date: "Dec 5, 2024",
+    title: "Otimizar Carregamento da Página", 
+    date: "5 de Dez, 2024",
     color: "bg-chart-4"
   },
   { 
     icon: Globe, 
-    title: "Cross-Browser Testing", 
-    date: "Dec 6, 2024",
+    title: "Testes Cross-Browser", 
+    date: "6 de Dez, 2024",
     color: "bg-chart-5"
   },
 ];
@@ -37,10 +37,10 @@ export function ProjectList() {
   return (
     <div className="bg-card rounded-2xl p-6 border border-border animate-slide-up" style={{ animationDelay: "400ms" }}>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-foreground">Project</h3>
+        <h3 className="text-lg font-semibold text-foreground">Projetos</h3>
         <button className="flex items-center gap-1.5 text-sm font-medium text-foreground hover:text-primary transition-colors px-3 py-1.5 rounded-lg border border-border hover:border-primary">
           <Plus className="w-4 h-4" />
-          New
+          Novo
         </button>
       </div>
       
@@ -55,7 +55,7 @@ export function ProjectList() {
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-sm font-medium text-foreground truncate">{project.title}</p>
-              <p className="text-xs text-muted-foreground">Due date: {project.date}</p>
+              <p className="text-xs text-muted-foreground">Data de vencimento: {project.date}</p>
             </div>
           </div>
         ))}

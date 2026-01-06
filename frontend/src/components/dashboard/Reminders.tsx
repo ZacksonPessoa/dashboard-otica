@@ -3,7 +3,7 @@ import { Video } from "lucide-react";
 export function Reminders() {
   return (
     <div className="bg-card rounded-2xl p-6 border border-border animate-slide-up" style={{ animationDelay: "300ms" }}>
-      <h3 className="text-lg font-semibold text-foreground mb-4">Reminders</h3>
+      <h3 className="text-lg font-semibold text-foreground mb-4">Lembretes</h3>
       
       <div className="flex items-start gap-4">
         {/* Circular Progress */}
@@ -38,13 +38,13 @@ export function Reminders() {
 
         {/* Meeting Info */}
         <div className="flex-1">
-          <h4 className="font-semibold text-foreground mb-1">Meeting with Arc Company</h4>
+          <h4 className="font-semibold text-foreground mb-1">Reunião com Arc Company</h4>
           <p className="text-sm text-muted-foreground mb-4">
-            Time : 02.00 pm - 04.00 pm
+            Horário : 14:00 - 16:00
           </p>
           <button className="w-full bg-primary hover:bg-accent text-primary-foreground py-2.5 rounded-lg text-sm font-medium flex items-center justify-center gap-2 transition-colors">
             <Video className="w-4 h-4" />
-            Start Meeting
+            Iniciar Reunião
           </button>
         </div>
       </div>
