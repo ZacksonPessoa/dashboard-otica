@@ -3,11 +3,8 @@ import { Sidebar } from "@/components/dashboard/Sidebar";
 import { Header } from "@/components/dashboard/Header";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { ProjectAnalytics } from "@/components/dashboard/ProjectAnalytics";
-import { Reminders } from "@/components/dashboard/Reminders";
-import { ProjectList } from "@/components/dashboard/ProjectList";
+import { SalesReport } from "@/components/dashboard/SalesReport";
 import { TeamCollaboration } from "@/components/dashboard/TeamCollaboration";
-import { ProjectProgress } from "@/components/dashboard/ProjectProgress";
-import { TimeTracker } from "@/components/dashboard/TimeTracker";
 
 const Index = () => {
   return (
@@ -46,29 +43,14 @@ const Index = () => {
               <ProjectAnalytics />
             </div>
 
-            {/* Reminders */}
-            <div className="col-span-4">
-              <Reminders />
-            </div>
-
-            {/* Project List */}
-            <div className="col-span-4">
-              <ProjectList />
+            {/* Sales Report */}
+            <div className="col-span-8">
+              <SalesReport />
             </div>
 
             {/* Team Collaboration */}
-            <div className="col-span-5">
+            <div className="col-span-12">
               <TeamCollaboration />
-            </div>
-
-            {/* Project Progress */}
-            <div className="col-span-4">
-              <ProjectProgress />
-            </div>
-
-            {/* Time Tracker */}
-            <div className="col-span-3">
-              <TimeTracker />
             </div>
           </div>
         </main>
