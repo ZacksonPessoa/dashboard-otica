@@ -4,7 +4,7 @@ import { Header } from "@/components/dashboard/Header";
 import { StatsCards } from "@/components/dashboard/StatsCards";
 import { ProjectAnalytics } from "@/components/dashboard/ProjectAnalytics";
 import { SalesReport } from "@/components/dashboard/SalesReport";
-import { TeamCollaboration } from "@/components/dashboard/TeamCollaboration";
+import { Transactions } from "@/components/dashboard/Transactions";
 
 const Index = () => {
   return (
@@ -48,9 +48,9 @@ const Index = () => {
               <SalesReport />
             </div>
 
-            {/* Team Collaboration */}
+            {/* Transactions */}
             <div className="col-span-12">
-              <TeamCollaboration />
+              <Transactions />
             </div>
           </div>
         </main>

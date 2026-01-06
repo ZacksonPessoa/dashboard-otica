@@ -47,6 +47,14 @@ export interface ProductsData {
   salesOfLaunchedProducts: number;
 }
 
+export interface Transaction {
+  id: string;
+  productName: string;
+  date: string;
+  status: string;
+  quantity: number;
+}
+
 export const api = {
   async getNotifications(): Promise<Notification[]> {
     const response = await fetch(`${API_BASE_URL}/ml/notifications`);
@@ -176,6 +184,33 @@ export const api = {
       return result.data;
     } catch (error) {
       console.error("Error in getProducts:", error);
+      throw error;
+    }
+  },
+
+  async getTransactions(): Promise<Transaction[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/ml/transactions`);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Transactions API Error Response:", errorText);
+        throw new Error(`Failed to fetch transactions: ${response.status} ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      
+      if (import.meta.env.DEV) {
+        console.log("💳 Transactions Response:", result);
+      }
+      
+      if (!result.ok) {
+        throw new Error(result.error || "Failed to fetch transactions");
+      }
+      
+      return result.transactions || [];
+    } catch (error) {
+      console.error("Error in getTransactions:", error);
       throw error;
     }
   },
