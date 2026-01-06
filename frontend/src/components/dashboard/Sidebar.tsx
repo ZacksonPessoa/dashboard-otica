@@ -4,12 +4,13 @@ import {
   BarChart3, 
   LogOut
 } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
-  { icon: LayoutDashboard, label: "Geral", active: true },
-  { icon: BarChart3, label: "Análises" },
-  { icon: CheckSquare, label: "Transações" },
+  { icon: LayoutDashboard, label: "Geral", path: "/" },
+  { icon: BarChart3, label: "Análises", path: "/analytics" },
+  { icon: CheckSquare, label: "Transações", path: "/transactions" },
 ];
 
 const generalItems = [
@@ -17,6 +18,9 @@ const generalItems = [
 ];
 
 export function Sidebar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
   return (
     <aside className="fixed left-0 top-0 z-50 h-screen w-64 bg-card border-r border-border flex flex-col">
       {/* Logo */}
@@ -42,31 +46,25 @@ export function Sidebar() {
           Menu
         </p>
         <ul className="space-y-1">
-          {menuItems.map((item) => (
-            <li key={item.label}>
-              <button
-                className={cn(
-                  "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-                  item.active 
-                    ? "bg-primary text-primary-foreground" 
-                    : "text-muted-foreground hover:bg-secondary hover:text-foreground"
-                )}
-              >
-                <item.icon className="w-5 h-5" />
-                <span>{item.label}</span>
-                {item.badge && (
-                  <span className={cn(
-                    "ml-auto text-xs px-2 py-0.5 rounded-full",
-                    item.active 
-                      ? "bg-primary-foreground/20 text-primary-foreground" 
-                      : "bg-primary/10 text-primary"
-                  )}>
-                    {item.badge}
-                  </span>
-                )}
-              </button>
-            </li>
-          ))}
+          {menuItems.map((item) => {
+            const isActive = location.pathname === item.path;
+            return (
+              <li key={item.label}>
+                <button
+                  onClick={() => navigate(item.path)}
+                  className={cn(
+                    "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
+                    isActive 
+                      ? "bg-primary text-primary-foreground" 
+                      : "text-muted-foreground hover:bg-secondary hover:text-foreground"
+                  )}
+                >
+                  <item.icon className="w-5 h-5" />
+                  <span>{item.label}</span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       </nav>
 

@@ -55,6 +55,30 @@ export interface Transaction {
   quantity: number;
 }
 
+export interface ProductAnalysis {
+  id: string;
+  productName: string;
+  sku: string;
+  orderId: string;
+  salePrice: number;
+  productCost: number;
+  commission: number;
+  shipping: number;
+  totalCosts: number;
+  profit: number;
+  margin: number;
+  problems: string[];
+  quantity: number;
+  date: string;
+}
+
+export interface ProductAnalysisSummary {
+  total: number;
+  withProfit: number;
+  withLoss: number;
+  totalProfit: number;
+}
+
 export const api = {
   async getNotifications(): Promise<Notification[]> {
     const response = await fetch(`${API_BASE_URL}/ml/notifications`);
@@ -226,6 +250,41 @@ export const api = {
       return result.transactions || [];
     } catch (error) {
       console.error("Error in getTransactions:", error);
+      throw error;
+    }
+  },
+
+  async getProductAnalysis(fromDate?: string, toDate?: string): Promise<{ summary: ProductAnalysisSummary; products: ProductAnalysis[] }> {
+    try {
+      const params = new URLSearchParams();
+      if (fromDate) params.append("from", fromDate);
+      if (toDate) params.append("to", toDate);
+      const queryString = params.toString();
+      const url = `${API_BASE_URL}/ml/product-analysis${queryString ? `?${queryString}` : ""}`;
+      const response = await fetch(url);
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Product Analysis API Error Response:", errorText);
+        throw new Error(`Failed to fetch product analysis: ${response.status} ${response.statusText}`);
+      }
+      
+      const result = await response.json();
+      
+      if (import.meta.env.DEV) {
+        console.log("📊 Product Analysis Response:", result);
+      }
+      
+      if (!result.ok) {
+        throw new Error(result.error || "Failed to fetch product analysis");
+      }
+      
+      return {
+        summary: result.summary || { total: 0, withProfit: 0, withLoss: 0, totalProfit: 0 },
+        products: result.products || [],
+      };
+    } catch (error) {
+      console.error("Error in getProductAnalysis:", error);
       throw error;
     }
   },
