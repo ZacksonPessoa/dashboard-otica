@@ -2,6 +2,7 @@ import {
   LayoutDashboard, 
   CheckSquare, 
   BarChart3, 
+  Calculator,
   LogOut
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -11,6 +12,7 @@ const menuItems = [
   { icon: LayoutDashboard, label: "Geral", path: "/" },
   { icon: BarChart3, label: "Análises", path: "/analytics" },
   { icon: CheckSquare, label: "Transações", path: "/transactions" },
+  { icon: Calculator, label: "Simulador", path: "/simulator" },
 ];
 
 const generalItems = [

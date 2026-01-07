@@ -13,36 +13,49 @@ export function StatsCards() {
     }).format(value);
   };
 
+  const realProfit = statsData?.realProfit || 0;
+  const isProfit = realProfit >= 0;
+
   const stats = [
     {
-      title: "Total de Vendas",
+      title: "Total Vendido",
       value: isLoading
         ? "..."
         : formatCurrency(statsData?.totalSales || 0),
-      subtitle: "Valor total",
-      trend: "up",
+      subtitle: "Receita bruta",
+      trend: "up" as const,
       active: true,
+      isProfit: undefined as boolean | undefined,
     },
     {
-      title: "Vendas do Dia",
-      value: isLoading ? "..." : (statsData?.todaySales || 0).toString(),
-      subtitle: "Quantidade",
-      trend: "up",
+      title: "Nº de Pedidos",
+      value: isLoading ? "..." : (statsData?.totalOrders || 0).toString(),
+      subtitle: "Total no período",
+      trend: "up" as const,
       active: false,
+      isProfit: undefined as boolean | undefined,
     },
     {
-      title: "Total a Enviar",
-      value: isLoading ? "..." : (statsData?.pendingShipments || 0).toString(),
-      subtitle: "Pendentes",
-      trend: "up",
+      title: "Receita Líquida",
+      value: isLoading
+        ? "..."
+        : formatCurrency(statsData?.netRevenue || 0),
+      subtitle: "Bruta - Comissões",
+      trend: "up" as const,
       active: false,
+      isProfit: undefined as boolean | undefined,
     },
     {
-      title: "Cancelados",
-      value: isLoading ? "..." : (statsData?.cancelled || 0).toString(),
-      subtitle: "Este mês",
-      trend: "neutral",
+      title: "Lucro Real",
+      value: isLoading
+        ? "..."
+        : formatCurrency(realProfit),
+      subtitle: statsData?.margin !== undefined 
+        ? `Margem: ${statsData.margin.toFixed(2)}%`
+        : "Após todos os custos",
+      trend: isProfit ? ("up" as const) : ("down" as const),
       active: false,
+      isProfit: isProfit,
     },
   ];
   return (
@@ -80,7 +93,8 @@ export function StatsCards() {
           
           <p className={cn(
             "text-4xl font-bold mb-2",
-            stat.active ? "text-primary-foreground" : "text-foreground"
+            stat.active ? "text-primary-foreground" : "text-foreground",
+            stat.isProfit === false && "text-destructive"
           )}>
             {stat.value}
           </p>
@@ -92,9 +106,16 @@ export function StatsCards() {
                 stat.active ? "text-primary-foreground/80" : "text-success"
               )} />
             )}
+            {stat.trend === "down" && (
+              <TrendingUp className={cn(
+                "w-3.5 h-3.5 rotate-180",
+                "text-destructive"
+              )} />
+            )}
             <span className={cn(
               "text-xs",
-              stat.active ? "text-primary-foreground/80" : "text-muted-foreground"
+              stat.active ? "text-primary-foreground/80" : "text-muted-foreground",
+              stat.isProfit === false && "text-destructive"
             )}>
               {stat.subtitle}
             </span>

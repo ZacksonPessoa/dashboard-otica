@@ -27,10 +27,14 @@ export interface UserMe {
 }
 
 export interface Stats {
-  totalSales: number;
+  totalSales: number; // Receita bruta
   todaySales: number;
   pendingShipments: number;
   cancelled: number;
+  totalOrders: number; // Nº de pedidos
+  netRevenue: number; // Receita líquida
+  realProfit: number; // Lucro real
+  margin: number; // Margem (%)
 }
 
 export interface FinanceData {
