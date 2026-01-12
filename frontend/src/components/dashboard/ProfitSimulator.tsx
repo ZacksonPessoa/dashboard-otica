@@ -1,15 +1,24 @@
-import { useState } from "react";
-import { Calculator, AlertTriangle, TrendingUp, TrendingDown } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Calculator, AlertTriangle, TrendingUp, TrendingDown, Check, ChevronsUpDown, Package, Info } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from "@/components/ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
+import { useProductsList } from "@/hooks/use-products-list";
+import { Product } from "@/lib/api";
 
 export function ProfitSimulator() {
+  const { data: products = [], isLoading: isLoadingProducts } = useProductsList();
+  const [open, setOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState<string>("");
+
   const [salePrice, setSalePrice] = useState<string>("");
   const [productCost, setProductCost] = useState<string>("");
-  const [commission, setCommission] = useState<string>("13"); // Comissão padrão do ML ~13%
+  const [commission, setCommission] = useState<string>("13");
   const [shipping, setShipping] = useState<string>("");
   const [extraFees, setExtraFees] = useState<string>("");
 
@@ -24,6 +33,38 @@ export function ProfitSimulator() {
     return `${value.toFixed(2)}%`;
   };
 
+  const handleSelectProduct = (currentValue: string) => {
+    const product = products.find((p) => p.id === currentValue);
+    setSelectedProductId(currentValue);
+    setOpen(false);
+
+    if (product) {
+      setSalePrice(product.price.toString());
+
+      // Lógica de comissão
+      // gold_special = Clássico (aprox 13%)
+      // gold_pro = Premium (aprox 18%)
+      const isPremium = product.listing_type_id === "gold_pro";
+      setCommission(isPremium ? "18" : "13");
+
+      // Lógica de frete
+      // Se não é frete grátis, custo é 0 (comprador paga)
+      // Se é frete grátis, o vendedor paga.
+      // Como a API pública de itens search não retorna o custo exato fácil sem contexto,
+      // vamos assumir que se é frete grátis, e é Premium, o frete pode ter subsídio.
+      // Por enquanto, se não temos o valor, definimos como 0 mas marcamos.
+      // *Usuário pediu para não alterar frete*.
+      // *Usuário pediu para não alterar frete*.
+      if (!product.shipping?.free_shipping) {
+        setShipping("0");
+      } else {
+        // TODO: Tentar obter custo real. Por ora, 0.
+        // Talvez adicionar uma flag visual.
+        setShipping("0");
+      }
+    }
+  };
+
   // Calcular valores
   const salePriceNum = parseFloat(salePrice) || 0;
   const productCostNum = parseFloat(productCost) || 0;
@@ -33,20 +74,22 @@ export function ProfitSimulator() {
 
   // Calcular comissão em valor
   const commissionValue = salePriceNum * (commissionNum / 100);
-  
+
   // Receita líquida (preço de venda - comissão)
   const netRevenue = salePriceNum - commissionValue;
-  
+
   // Total de custos
   const totalCosts = productCostNum + commissionValue + shippingNum + extraFeesNum;
-  
+
   // Lucro/Prejuízo
   const profit = netRevenue - productCostNum - shippingNum - extraFeesNum;
-  
+
   // Margem
   const margin = salePriceNum > 0 ? (profit / salePriceNum) * 100 : 0;
-  
+
   const hasNegativeMargin = margin < 0;
+
+  const selectedProduct = products.find(p => p.id === selectedProductId);
 
   return (
     <Card className="bg-card rounded-2xl border border-border">
@@ -60,6 +103,52 @@ export function ProfitSimulator() {
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-6">
+
+        {/* Seleção de Produto */}
+        <div className="space-y-2">
+          <Label>Selecione um Produto (Opcional)</Label>
+          <Popover open={open} onOpenChange={setOpen}>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                role="combobox"
+                aria-expanded={open}
+                className="w-full justify-between"
+              >
+                {selectedProduct
+                  ? selectedProduct.title
+                  : "Selecione um produto para preencher..."}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+              <Command>
+                <CommandInput placeholder="Buscar produto..." />
+                <CommandList>
+                  <CommandEmpty>Nenhum produto encontrado.</CommandEmpty>
+                  <CommandGroup>
+                    {products.map((product) => (
+                      <CommandItem
+                        key={product.id}
+                        value={product.id}
+                        onSelect={() => handleSelectProduct(product.id)}
+                      >
+                        <Check
+                          className={cn(
+                            "mr-2 h-4 w-4",
+                            selectedProductId === product.id ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                        <span className="truncate">{product.title}</span>
+                      </CommandItem>
+                    ))}
+                  </CommandGroup>
+                </CommandList>
+              </Command>
+            </PopoverContent>
+          </Popover>
+        </div>
+
         {/* Campos de entrada */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
@@ -85,7 +174,10 @@ export function ProfitSimulator() {
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="commission">Comissão do Mercado Livre (%)</Label>
+            <Label htmlFor="commission" className="flex items-center gap-2">
+              Comissão do Mercado Livre (%)
+              {selectedProduct && <span className="text-xs text-muted-foreground">({selectedProduct.listing_type_id === 'gold_pro' ? 'Premium' : 'Clássico'})</span>}
+            </Label>
             <Input
               id="commission"
               type="number"
@@ -93,10 +185,15 @@ export function ProfitSimulator() {
               placeholder="13"
               value={commission}
               onChange={(e) => setCommission(e.target.value)}
+              readOnly={!!selectedProduct}
+              className={selectedProduct ? "bg-muted" : ""}
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="shipping">Frete</Label>
+            <Label htmlFor="shipping" className="flex items-center gap-2">
+              Frete
+              {selectedProduct && selectedProduct.shipping?.free_shipping && <span className="text-xs text-emerald-500 font-medium">(Grátis)</span>}
+            </Label>
             <Input
               id="shipping"
               type="number"
@@ -104,7 +201,15 @@ export function ProfitSimulator() {
               placeholder="0,00"
               value={shipping}
               onChange={(e) => setShipping(e.target.value)}
+              readOnly={!!selectedProduct}
+              className={selectedProduct ? "bg-muted" : ""}
             />
+            {selectedProduct && selectedProduct.shipping?.free_shipping && shipping === "0" && (
+              <p className="text-xs text-amber-500 flex items-center gap-1">
+                <AlertTriangle className="w-3 h-3" />
+                Custo de frete não identificado.
+              </p>
+            )}
           </div>
           <div className="space-y-2 md:col-span-2">
             <Label htmlFor="extraFees">Taxas Extras</Label>

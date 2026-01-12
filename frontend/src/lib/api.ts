@@ -62,6 +62,13 @@ export interface Product {
   sold_quantity: number;
   permalink: string;
   thumbnail: string;
+  shipping: {
+    free_shipping: boolean;
+    mode: string;
+    tags: string[];
+    logistic_type: string;
+    store_pick_up: boolean;
+  };
 }
 
 export interface Transaction {
