@@ -34,6 +34,27 @@ export function Header() {
     return "ML";
   };
 
+  const getNotificationTitle = (type: string) => {
+    switch (type) {
+      case "questions":
+        return "Nova Pergunta";
+      case "messages":
+        return "Nova Mensagem";
+      case "orders_v2":
+        return "Nova Venda";
+      case "items":
+        return "Anúncio Atualizado";
+      case "shipments":
+        return "Atualização de Envio";
+      case "payments":
+        return "Atualização de Pagamento";
+      case "unknown":
+        return "Nova Notificação";
+      default:
+        return type === "unknown" ? "Nova Notificação" : type;
+    }
+  };
+
   return (
     <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-card/50 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 z-30">
       <div className="flex items-center gap-4">
@@ -87,7 +108,7 @@ export function Header() {
                 >
                   <div className="flex items-center justify-between w-full">
                     <span className="text-sm font-medium">
-                      {notification.type}
+                      {getNotificationTitle(notification.type)}
                     </span>
                     {!notification.read && (
                       <span className="w-2 h-2 bg-primary rounded-full" />
@@ -123,7 +144,7 @@ export function Header() {
                 ? "Carregando..."
                 : errorMe
                   ? "Erro ao carregar"
-                  : userMe?.id?.toString() || "ID não disponível"}
+                  : userMe?.nickname || "Usuário"}
             </p>
             <p className="text-xs text-muted-foreground">
               {isLoadingMe

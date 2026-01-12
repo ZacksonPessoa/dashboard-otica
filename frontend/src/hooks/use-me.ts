@@ -1,8 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
-import { api } from "@/lib/api";
+import { api, UserMe } from "@/lib/api";
 
 export function useMe() {
-  return useQuery({
+  return useQuery<UserMe>({
     queryKey: ["me"],
     queryFn: api.getMe,
     staleTime: 5 * 60 * 1000, // Cache por 5 minutos
