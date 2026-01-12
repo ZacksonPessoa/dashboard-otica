@@ -3,13 +3,15 @@ import {
   CheckSquare,
   BarChart3,
   Calculator,
-  LogOut
+  LogOut,
+  ShoppingBag
 } from "lucide-react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 const menuItems = [
   { icon: LayoutDashboard, label: "Geral", path: "/" },
+  { icon: ShoppingBag, label: "Produtos", path: "/products" },
   { icon: BarChart3, label: "Análises", path: "/analytics" },
   { icon: CheckSquare, label: "Transações", path: "/transactions" },
   { icon: Calculator, label: "Simulador", path: "/simulator" },

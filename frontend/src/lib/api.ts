@@ -51,6 +51,16 @@ export interface ProductsData {
   salesOfLaunchedProducts: number;
 }
 
+export interface Product {
+  id: string;
+  title: string;
+  price: number;
+  listing_type_id: string;
+  sold_quantity: number;
+  permalink: string;
+  thumbnail: string;
+}
+
 export interface Transaction {
   id: string;
   productName: string;
@@ -100,27 +110,27 @@ export const api = {
   async getMe(): Promise<UserMe> {
     try {
       const response = await fetch(`${API_BASE_URL}/ml/me`);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("API Error Response:", errorText);
         throw new Error(`Failed to fetch user data: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("📦 API Response:", data);
       }
-      
+
       if (!data.ok) {
         throw new Error(data.error || "Failed to fetch user data");
       }
-      
+
       if (!data.me) {
         throw new Error("User data not found in response");
       }
-      
+
       return data.me;
     } catch (error) {
       console.error("Error in getMe:", error);
@@ -136,27 +146,27 @@ export const api = {
       const queryString = params.toString();
       const url = `${API_BASE_URL}/ml/stats${queryString ? `?${queryString}` : ""}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Stats API Error Response:", errorText);
         throw new Error(`Failed to fetch stats: ${response.status} ${response.statusText}`);
       }
-      
+
       const data = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("📊 Stats Response:", data);
       }
-      
+
       if (!data.ok) {
         throw new Error(data.error || "Failed to fetch stats");
       }
-      
+
       if (!data.stats) {
         throw new Error("Stats data not found in response");
       }
-      
+
       return data.stats;
     } catch (error) {
       console.error("Error in getStats:", error);
@@ -172,23 +182,23 @@ export const api = {
       const queryString = params.toString();
       const url = `${API_BASE_URL}/ml/finance${queryString ? `?${queryString}` : ""}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Finance API Error Response:", errorText);
         throw new Error(`Failed to fetch finance data: ${response.status} ${response.statusText}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("💰 Finance Response:", result);
       }
-      
+
       if (!result.ok) {
         throw new Error(result.error || "Failed to fetch finance data");
       }
-      
+
       return {
         data: result.data || [],
         maxValue: result.maxValue || 100,
@@ -202,30 +212,57 @@ export const api = {
   async getProducts(): Promise<ProductsData> {
     try {
       const response = await fetch(`${API_BASE_URL}/ml/products`);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Products API Error Response:", errorText);
         throw new Error(`Failed to fetch products data: ${response.status} ${response.statusText}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("📦 Products Response:", result);
       }
-      
+
       if (!result.ok) {
         throw new Error(result.error || "Failed to fetch products data");
       }
-      
+
       if (!result.data) {
         throw new Error("Products data not found in response");
       }
-      
+
       return result.data;
     } catch (error) {
       console.error("Error in getProducts:", error);
+      throw error;
+    }
+  },
+
+  async getProductsList(): Promise<Product[]> {
+    try {
+      const response = await fetch(`${API_BASE_URL}/ml/products-list`);
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("Products List API Error Response:", errorText);
+        throw new Error(`Failed to fetch products list: ${response.status} ${response.statusText}`);
+      }
+
+      const result = await response.json();
+
+      if (import.meta.env.DEV) {
+        console.log("📦 Products List Response:", result);
+      }
+
+      if (!result.ok) {
+        throw new Error(result.error || "Failed to fetch products list");
+      }
+
+      return result.products || [];
+    } catch (error) {
+      console.error("Error in getProductsList:", error);
       throw error;
     }
   },
@@ -238,23 +275,23 @@ export const api = {
       const queryString = params.toString();
       const url = `${API_BASE_URL}/ml/transactions${queryString ? `?${queryString}` : ""}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Transactions API Error Response:", errorText);
         throw new Error(`Failed to fetch transactions: ${response.status} ${response.statusText}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("💳 Transactions Response:", result);
       }
-      
+
       if (!result.ok) {
         throw new Error(result.error || "Failed to fetch transactions");
       }
-      
+
       return result.transactions || [];
     } catch (error) {
       console.error("Error in getTransactions:", error);
@@ -270,23 +307,23 @@ export const api = {
       const queryString = params.toString();
       const url = `${API_BASE_URL}/ml/product-analysis${queryString ? `?${queryString}` : ""}`;
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error("Product Analysis API Error Response:", errorText);
         throw new Error(`Failed to fetch product analysis: ${response.status} ${response.statusText}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (import.meta.env.DEV) {
         console.log("📊 Product Analysis Response:", result);
       }
-      
+
       if (!result.ok) {
         throw new Error(result.error || "Failed to fetch product analysis");
       }
-      
+
       return {
         summary: result.summary || { total: 0, withProfit: 0, withLoss: 0, totalProfit: 0 },
         products: result.products || [],

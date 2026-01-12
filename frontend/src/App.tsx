@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Analytics from "./pages/Analytics";
 import Transactions from "./pages/Transactions";
 import Simulator from "./pages/Simulator";
+import Products from "./pages/Products";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -19,6 +20,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/products" element={<Products />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/transactions" element={<Transactions />} />
           <Route path="/simulator" element={<Simulator />} />
