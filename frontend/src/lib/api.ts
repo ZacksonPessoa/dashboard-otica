@@ -23,6 +23,9 @@ export interface UserMe {
   first_name?: string;
   last_name?: string;
   picture?: string;
+  thumbnail?: {
+    picture_url: string;
+  };
   [key: string]: any;
 }
 

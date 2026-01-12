@@ -128,7 +128,7 @@ export function Header() {
 
         <div className="flex items-center gap-3 pl-4 border-l border-border">
           <Avatar className="w-10 h-10">
-            <AvatarImage src={userMe?.picture} />
+            <AvatarImage src={userMe?.thumbnail?.picture_url || userMe?.picture} />
             <AvatarFallback>
               {isLoadingMe
                 ? "..."

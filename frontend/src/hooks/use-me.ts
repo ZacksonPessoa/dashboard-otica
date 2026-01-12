@@ -7,9 +7,7 @@ export function useMe() {
     queryFn: api.getMe,
     staleTime: 5 * 60 * 1000, // Cache por 5 minutos
     retry: 2,
-    onError: (error) => {
-      console.error("Erro ao buscar dados do usuário:", error);
-    },
+    retry: 2,
   });
 }
 
