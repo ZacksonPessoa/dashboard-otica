@@ -49,10 +49,10 @@ function TransactionsContent() {
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      
-      <div className="ml-64">
+
+      <div className="ml-0 md:ml-64">
         <Header />
-        
+
         <main className="p-6 pt-24">
           {/* Header Section */}
           <div className="flex items-center justify-between mb-6">

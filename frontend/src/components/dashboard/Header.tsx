@@ -12,6 +12,7 @@ import { useNotifications } from "@/hooks/use-notifications";
 import { useMe } from "@/hooks/use-me";
 import { formatDistanceToNow } from "date-fns";
 import { ptBR } from "date-fns/locale/pt-BR";
+import { MobileSidebar } from "@/components/dashboard/MobileSidebar";
 
 export function Header() {
   const { data: notifications = [], isLoading } = useNotifications();
@@ -34,18 +35,21 @@ export function Header() {
   };
 
   return (
-    <header className="fixed top-0 left-64 right-0 h-16 bg-card/50 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 z-30">
-      {/* Search */}
-      <div className="relative w-72">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-        <input
-          type="text"
-          placeholder="Buscar tarefa"
-          className="w-full pl-10 pr-16 py-2 bg-background rounded-lg border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
-        />
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs text-muted-foreground">
-          <Command className="w-3 h-3" />
-          <span>F</span>
+    <header className="fixed top-0 left-0 md:left-64 right-0 h-16 bg-card/50 backdrop-blur-sm border-b border-border flex items-center justify-between px-6 z-30">
+      <div className="flex items-center gap-4">
+        <MobileSidebar />
+        {/* Search */}
+        <div className="relative w-72 hidden md:block">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+          <input
+            type="text"
+            placeholder="Buscar tarefa"
+            className="w-full pl-10 pr-16 py-2 bg-background rounded-lg border border-border text-sm placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all"
+          />
+          <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 text-xs text-muted-foreground">
+            <Command className="w-3 h-3" />
+            <span>F</span>
+          </div>
         </div>
       </div>
 
@@ -100,7 +104,7 @@ export function Header() {
             )}
           </DropdownMenuContent>
         </DropdownMenu>
-        
+
         <div className="flex items-center gap-3 pl-4 border-l border-border">
           <Avatar className="w-10 h-10">
             <AvatarImage src={userMe?.picture} />
@@ -108,9 +112,9 @@ export function Header() {
               {isLoadingMe
                 ? "..."
                 : getInitials(
-                    userMe?.first_name || userMe?.nickname,
-                    userMe?.email
-                  )}
+                  userMe?.first_name || userMe?.nickname,
+                  userMe?.email
+                )}
             </AvatarFallback>
           </Avatar>
           <div className="text-right">
@@ -118,15 +122,15 @@ export function Header() {
               {isLoadingMe
                 ? "Carregando..."
                 : errorMe
-                ? "Erro ao carregar"
-                : userMe?.id?.toString() || "ID não disponível"}
+                  ? "Erro ao carregar"
+                  : userMe?.id?.toString() || "ID não disponível"}
             </p>
             <p className="text-xs text-muted-foreground">
               {isLoadingMe
                 ? "..."
                 : errorMe
-                ? "Verifique o console"
-                : userMe?.email || "Email não disponível"}
+                  ? "Verifique o console"
+                  : userMe?.email || "Email não disponível"}
             </p>
           </div>
         </div>

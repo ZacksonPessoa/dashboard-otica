@@ -1,7 +1,7 @@
-import { 
-  LayoutDashboard, 
-  CheckSquare, 
-  BarChart3, 
+import {
+  LayoutDashboard,
+  CheckSquare,
+  BarChart3,
   Calculator,
   LogOut
 } from "lucide-react";
@@ -19,17 +19,17 @@ const generalItems = [
   { icon: LogOut, label: "Sair" },
 ];
 
-export function Sidebar() {
+export function SidebarContent() {
   const location = useLocation();
   const navigate = useNavigate();
 
   return (
-    <aside className="fixed left-0 top-0 z-50 h-screen w-64 bg-card border-r border-border flex flex-col">
+    <div className="flex flex-col h-full bg-card">
       {/* Logo */}
       <div className="p-6 flex items-center gap-3">
         <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
-          <svg 
-            viewBox="0 0 24 24" 
+          <svg
+            viewBox="0 0 24 24"
             className="w-6 h-6 text-primary-foreground"
             fill="none"
             stroke="currentColor"
@@ -56,8 +56,8 @@ export function Sidebar() {
                   onClick={() => navigate(item.path)}
                   className={cn(
                     "w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200",
-                    isActive 
-                      ? "bg-primary text-primary-foreground" 
+                    isActive
+                      ? "bg-primary text-primary-foreground"
                       : "text-muted-foreground hover:bg-secondary hover:text-foreground"
                   )}
                 >
@@ -83,6 +83,14 @@ export function Sidebar() {
           ))}
         </ul>
       </div>
+    </div>
+  );
+}
+
+export function Sidebar() {
+  return (
+    <aside className="hidden md:flex fixed left-0 top-0 z-50 h-screen w-64 border-r border-border flex-col">
+      <SidebarContent />
     </aside>
   );
 }

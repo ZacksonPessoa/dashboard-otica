@@ -14,7 +14,7 @@ function DashboardContent() {
     <div className="min-h-screen bg-background">
       <Sidebar />
       
-      <div className="ml-64">
+      <div className="ml-0 md:ml-64">
         <Header />
         
         <main className="p-6 pt-24">
@@ -33,14 +33,14 @@ function DashboardContent() {
           <StatsCards />
 
           {/* Main Grid */}
-          <div className="grid grid-cols-12 gap-4 mt-6">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-6">
             {/* Project Analytics */}
-            <div className="col-span-4">
+            <div className="col-span-12 md:col-span-4">
               <ProjectAnalytics />
             </div>
 
             {/* Sales Report */}
-            <div className="col-span-8">
+            <div className="col-span-12 md:col-span-8">
               <SalesReport />
             </div>
 

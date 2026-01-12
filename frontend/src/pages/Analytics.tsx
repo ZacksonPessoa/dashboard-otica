@@ -76,10 +76,10 @@ function AnalyticsContent() {
   return (
     <div className="min-h-screen bg-background">
       <Sidebar />
-      
-      <div className="ml-64">
+
+      <div className="ml-0 md:ml-64">
         <Header />
-        
+
         <main className="p-6 pt-24">
           {/* Title Section */}
           <div className="flex items-start justify-between mb-6">
